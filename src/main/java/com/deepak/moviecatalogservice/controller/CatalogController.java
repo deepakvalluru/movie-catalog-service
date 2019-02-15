@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +30,10 @@ public class CatalogController
    @RequestMapping ( method = RequestMethod.GET, path = "/{userId}" )
    public List< CatalogItem > getUserCatalog( @PathVariable ( "userId" ) String userId )
    {
+      System.out.println( "Hello" );
+      
       ResponseEntity< List< Rating > > ratingList =
-                                                  this.restTemplate.exchange( "http://localhost:8083/ratings/users/"
+                                                  this.restTemplate.exchange( "http://RATINGS-DATA-SERVICE/ratings/users/"
                                                                               + userId,
                                                                               HttpMethod.GET,
                                                                               null,
@@ -40,7 +43,7 @@ public class CatalogController
       
       
       return ratingList.getBody().stream().map( rating -> {
-         Movie movie = this.restTemplate.getForEntity( "http://localhost:8082/movies/" + rating.getMovieId(),
+         Movie movie = this.restTemplate.getForEntity( "http://MOVIE-INFO-SERVICE/movies/" + rating.getMovieId(),
                                                        Movie.class )
                                         .getBody();
          return new CatalogItem( movie.getName(), movie.getDesc(), rating.getRating() );
@@ -49,11 +52,4 @@ public class CatalogController
       
    }
 
-   private List< CatalogItem > getCatalogItems()
-   {
-      return Stream.< CatalogItem > builder()
-                   .add( new CatalogItem( "Hello", "Hello-Desc", 5 ) )
-                   .build()
-                   .collect( Collectors.toList() );
-   }
 }
