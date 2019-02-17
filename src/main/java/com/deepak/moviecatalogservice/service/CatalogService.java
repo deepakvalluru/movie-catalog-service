@@ -25,7 +25,7 @@ public class CatalogService
    public List< Rating > getRatingList( String userId )
    {
       ResponseEntity< List< Rating > > ratingList =
-                                                  this.restTemplate.exchange( "http://RATINGS-DATA-SERVICE/ratings/users/"
+                                                  this.restTemplate.exchange( "http://ratings-data-service/ratings/users/"
                                                                               + userId,
                                                                               HttpMethod.GET,
                                                                               null,
@@ -38,7 +38,7 @@ public class CatalogService
 
    public Movie getMovie( String movieId )
    {
-      ResponseEntity< Movie > movie = this.restTemplate.getForEntity( "http://MOVIE-INFO-SERVICE/movies/" + movieId,
+      ResponseEntity< Movie > movie = this.restTemplate.getForEntity( "http://movie-info-service/movies/" + movieId,
                                                                       Movie.class );
       return movie != null ? movie.getBody() : null;
    }
