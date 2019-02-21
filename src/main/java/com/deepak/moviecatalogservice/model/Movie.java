@@ -61,5 +61,14 @@ public class Movie
    {
       this.desc = desc;
    }
+
+   /* (non-Javadoc)
+    * @see java.lang.Object#toString()
+    */
+   @Override
+   public String toString()
+   {
+      return "Movie [movieId=" + movieId + ", name=" + name + ", desc=" + desc + "]";
+   }
    
 }

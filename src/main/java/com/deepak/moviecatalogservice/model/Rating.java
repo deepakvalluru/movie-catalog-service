@@ -44,4 +44,13 @@ public class Rating
    {
       this.rating = rating;
    }
+
+   /* (non-Javadoc)
+    * @see java.lang.Object#toString()
+    */
+   @Override
+   public String toString()
+   {
+      return "Rating [movieId=" + movieId + ", rating=" + rating + "]";
+   }
 }

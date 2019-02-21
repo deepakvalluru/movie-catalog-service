@@ -1,8 +1,11 @@
 package com.deepak.moviecatalogservice.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -21,6 +24,8 @@ import com.deepak.moviecatalogservice.service.CatalogService;
 @RequestMapping ( "/catalog" )
 public class CatalogController
 {
+   private static final Logger logger = LoggerFactory.getLogger( CatalogController.class );
+   
    @Autowired
    private CatalogService catalogService;
    
@@ -33,7 +38,9 @@ public class CatalogController
    @RequestMapping( method=RequestMethod.GET, path="/message")
    public String getMessage()
    {
-      return this.message + " - with instance id - "+ this.instanceId;
+      String message = this.message + " - with instance id - "+ this.instanceId + " at this time - " + LocalDateTime.now(); 
+      logger.debug( "Here's the message : {}", message );
+      return message;
    }
 
    @RequestMapping ( method = RequestMethod.GET, path = "/{userId}" )
